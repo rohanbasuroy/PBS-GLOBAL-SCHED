@@ -1,0 +1,175 @@
+#!/bin/bash
+
+# Copyright (C) 2003-2022 Altair Engineering, Inc. All rights reserved.
+# Copyright notice does not imply publication.
+#
+# ALTAIR ENGINEERING INC. Proprietary and Confidential. Contains Trade Secret
+# Information. Not for use or disclosure outside of Licensee's organization.
+# The software and information contained herein may only be used internally and
+# is provided on a non-exclusive, non-transferable basis. License may not
+# sublicense, sell, lend, assign, rent, distribute, publicly display or
+# publicly perform the software or other information provided herein,
+# nor is Licensee permitted to decompile, reverse engineer, or
+# disassemble the software. Usage of the software and other information
+# provided by Altair(or its resellers) is only as explicitly stated in the
+# applicable end user license agreement between Altair and Licensee.
+# In the absence of such agreement, the Altair standard end user
+# license agreement terms shall govern.
+
+"true" '''\'
+pp=`readlink -f $0`
+pp=`dirname $pp`
+pp=`readlink -f $pp`
+pp="${pp}/python/bin/python3"
+if [ -f $pp ]
+ then
+        exec "$pp" "$0" "$@"
+else
+        exec "/usr/bin/env" "python3" "$0" "$@"
+fi
+'''
+
+import sys
+import os
+import subprocess
+import copy
+import tempfile
+
+from subprocess import PIPE
+from subprocess import CalledProcessError
+
+SUPPORTED_CMDS = ["qstat", "qmgr", "pbsnodes", "qsub", "qdel", "qselect",
+                  "pbsfs", "pbs_rsub", "pbs_rstat", "tracejob", "sim"]
+
+HELPMSG = """
+Syntax:
+simsh <path to snapshot> <command to execute> [command options]
+where <commands to execute> can be:
+    for reading/manipulating snapshot: qmgr, qstat, qsub, pbsnodes, qdel, qselect, pbsfs, pbs_rsub, pbs_rstat, tracejob
+    for running simulations  : sim
+or
+simsh --version
+or
+simsh --help
+"""
+
+VERSION = '''2022.1.2.20221214134647'''
+
+if __name__ == '__main__':
+
+    # Note: Can't use argparse because it can't accept hyphen values like -Bf
+    if len(sys.argv) < 2:
+        print(HELPMSG)
+        sys.exit(1)
+
+    arg1 = sys.argv[1]
+
+    if arg1 == "--help" or arg1 == "-h":
+        print(HELPMSG)
+        sys.exit(0)
+    elif arg1 == "--version":
+        print(VERSION)
+        sys.exit(0)
+
+    if len(sys.argv) < 3:
+        print(HELPMSG)
+        sys.exit(1)
+
+    cmd = sys.argv[2]
+    cmdargs = sys.argv[3:]
+    snap_path = arg1
+
+    if not os.path.isdir(snap_path):
+        print("Snapshot path invalid/not found")
+        sys.exit(1)
+
+    if cmd not in SUPPORTED_CMDS:
+        print("Command not supported")
+        sys.exit(1)
+
+    if cmd == "sim":
+        cmd = "pbs_sim"
+
+    # See if we were provided path to simulator's exec via env SIM_EXEC
+    if "SIM_EXEC" in os.environ:
+        execpath = os.environ["SIM_EXEC"]
+    else:
+        # Assume that SIM_EXEC is the home of the script
+        script_path = os.path.abspath(sys.argv[0])
+        execpath = os.path.dirname(script_path)
+
+    if cmd == "pbsfs":
+        cmdpath = os.path.join(execpath, "sbin", cmd)
+    else:
+        cmdpath = os.path.join(execpath, "bin", cmd)
+    if not os.path.isfile(cmdpath):
+        # See if SIM_EXEC is the current working directory
+        execpath = os.getcwd()
+        cmdpath = os.path.join(execpath, "bin", cmd)
+        if not os.path.isfile(cmdpath):
+            print("Command path not found, please provide SIM_EXEC\nor\n"
+                  "move the script to simulator directory\nor\nrun it from"
+                  " inside the simulator directory")
+            sys.exit(1)
+
+    # Let's also try to find sim.conf
+    confpath = None
+    if "SIM_CONF_PATH" in os.environ:
+        confpath = os.environ["SIM_CONF_PATH"]
+    else:
+        confpath = os.path.join(execpath, "sim.conf")
+        if not os.path.isfile(confpath):
+            confpath = None
+
+    sim_conf = {}
+    if confpath is not None:
+        with open(confpath, "r") as fd:
+            for line in fd:
+                line = line.strip()
+                if len(line) > 1 and line[0].isalpha():
+                    key, val = line.split("=", 1)
+                    sim_conf[key] = val
+
+    libpath = os.path.join(execpath, "lib")
+    cmdenv = copy.deepcopy(os.environ)
+    cmdenv["LD_LIBRARY_PATH"] = libpath
+    # Disable fork of background qsub process in simulator qsub
+    # submit job with -f option
+    # qsub should fully execute from the foreground, so daemon_submit() is not called.
+	# It should not fork, neither should it send the data to the background qsub.
+    if cmd == "qsub":
+        cmdargs.insert(0, '-f')
+
+    if cmd in ['qstat', 'qdel', 'pbs_rstat', 'tracejob']:
+        cmdenv["PBS_CONF_FILE"] = os.path.join(snap_path, 'pbs.conf')
+
+    if len(cmdargs) > 0:
+        cmdexec = [cmdpath] + cmdargs
+    else:
+        cmdexec = [cmdpath]
+
+    # Create a temporary sim.conf with PBS_HOME set to snapshot path
+    # This is the easiest way to let simulator's binaries to find snapshot path
+    sim_conf["PBS_SNAPSHOT_PATH"] = snap_path
+    with tempfile.NamedTemporaryFile(mode="w") as fd:
+        for key, val in sim_conf.items():
+            fd.write("%s=%s\n" % (key, val))
+        fd.flush()
+        os.fsync(fd)
+        sim_conf_path = fd.name
+        cmdenv["SIM_CONF_PATH"] = sim_conf_path
+        cmdenv["PBS_HOME"] = snap_path
+        out = ""
+        try:
+            print("### Snapshot: " + snap_path + " ###\n")
+            out = subprocess.run(args=cmdexec,
+                                 stdin=sys.stdin, stdout=PIPE,
+                                 stderr=PIPE, env=cmdenv, check=True)
+
+        except CalledProcessError as e:
+            print(e)
+            print(e.stderr.decode("ascii"), file=sys.stderr)
+            sys.exit(1)
+
+        if out.stdout is not None:
+            print(out.stdout.decode("ascii"), end="")

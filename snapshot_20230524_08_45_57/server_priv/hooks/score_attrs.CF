@@ -1,0 +1,4 @@
+{
+    "project_list_path": "/var/spool/pbs/project.list",
+    "default_project_priority": 2.5
+}

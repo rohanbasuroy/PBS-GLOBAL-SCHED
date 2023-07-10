@@ -1,0 +1,241 @@
+#
+# Create resources and set their properties.
+#
+#
+# Create and define resource system
+#
+create resource system
+set resource system type = string
+set resource system flag = h
+#
+# Create and define resource ngpus
+#
+create resource ngpus
+set resource ngpus type = long
+set resource ngpus flag = hn
+#
+# Create and define resource ns
+#
+create resource ns
+set resource ns type = boolean
+set resource ns flag = h
+#
+# Create and define resource ns1
+#
+create resource ns1
+set resource ns1 type = boolean
+set resource ns1 flag = h
+#
+# Create and define resource tier0
+#
+create resource tier0
+set resource tier0 type = string_array
+set resource tier0 flag = h
+#
+# Create and define resource tier1
+#
+create resource tier1
+set resource tier1 type = string_array
+set resource tier1 flag = h
+#
+# Create and define resource milan
+#
+create resource milan
+set resource milan type = boolean
+set resource milan flag = h
+#
+# Create and define resource cpu_type
+#
+create resource cpu_type
+set resource cpu_type type = string
+set resource cpu_type flag = h
+#
+# Create and define resource gputype
+#
+create resource gputype
+set resource gputype type = string_array
+set resource gputype flag = h
+#
+# Create and define resource singularity_fakeroot
+#
+create resource singularity_fakeroot
+set resource singularity_fakeroot type = boolean
+#
+# Create and define resource ni_resource
+#
+create resource ni_resource
+set resource ni_resource type = string
+set resource ni_resource flag = r
+#
+# Create and define resource allow_negative_allocation
+#
+create resource allow_negative_allocation
+set resource allow_negative_allocation type = boolean
+set resource allow_negative_allocation flag = r
+#
+# Create and define resource total_allocation
+#
+create resource total_allocation
+set resource total_allocation type = float
+set resource total_allocation flag = r
+#
+# Create and define resource current_allocation
+#
+create resource current_allocation
+set resource current_allocation type = float
+set resource current_allocation flag = r
+#
+# Create and define resource award_category
+#
+create resource award_category
+set resource award_category type = string
+set resource award_category flag = r
+#
+# Create and define resource award_type
+#
+create resource award_type
+set resource award_type type = string
+set resource award_type flag = r
+#
+# Create and define resource burn_ratio
+#
+create resource burn_ratio
+set resource burn_ratio type = float
+set resource burn_ratio flag = r
+#
+# Create and define resource route_backfill
+#
+create resource route_backfill
+set resource route_backfill type = boolean
+set resource route_backfill flag = r
+#
+# Create and define resource overburn
+#
+create resource overburn
+set resource overburn type = boolean
+set resource overburn flag = r
+#
+# Create and define resource demand
+#
+create resource demand
+set resource demand type = boolean
+set resource demand flag = hr
+#
+# Create and define resource backfill_factor
+#
+create resource backfill_factor
+set resource backfill_factor type = float
+set resource backfill_factor flag = r
+#
+# Create and define resource backfill_max
+#
+create resource backfill_max
+set resource backfill_max type = float
+set resource backfill_max flag = r
+#
+# Create and define resource base_score
+#
+create resource base_score
+set resource base_score type = float
+set resource base_score flag = r
+#
+# Create and define resource enable_backfill
+#
+create resource enable_backfill
+set resource enable_backfill type = float
+set resource enable_backfill flag = r
+#
+# Create and define resource enable_fifo
+#
+create resource enable_fifo
+set resource enable_fifo type = float
+set resource enable_fifo flag = r
+#
+# Create and define resource fifo_factor
+#
+create resource fifo_factor
+set resource fifo_factor type = float
+set resource fifo_factor flag = r
+#
+# Create and define resource enable_wfp
+#
+create resource enable_wfp
+set resource enable_wfp type = float
+set resource enable_wfp flag = r
+#
+# Create and define resource project_priority
+#
+create resource project_priority
+set resource project_priority type = float
+set resource project_priority flag = r
+#
+# Create and define resource score_boost
+#
+create resource score_boost
+set resource score_boost type = float
+set resource score_boost flag = r
+#
+# Create and define resource total_cpus
+#
+create resource total_cpus
+set resource total_cpus type = float
+set resource total_cpus flag = r
+#
+# Create and define resource wfp_factor
+#
+create resource wfp_factor
+set resource wfp_factor type = float
+set resource wfp_factor flag = r
+#
+# Create and define resource filesystems
+#
+create resource filesystems
+set resource filesystems type = string
+#
+# Create and define resource valid_filesystems
+#
+create resource valid_filesystems
+set resource valid_filesystems type = string_array
+set resource valid_filesystems flag = r
+#
+# Create and define resource grand_fs
+#
+create resource grand_fs
+set resource grand_fs type = boolean
+set resource grand_fs flag = r
+#
+# Create and define resource eagle_fs
+#
+create resource eagle_fs
+set resource eagle_fs type = boolean
+set resource eagle_fs flag = r
+#
+# Create and define resource home_fs
+#
+create resource home_fs
+set resource home_fs type = boolean
+set resource home_fs flag = r
+#
+# Create and define resource swift_fs
+#
+create resource swift_fs
+set resource swift_fs type = boolean
+set resource swift_fs flag = r
+#
+# Create and define resource allow_account_check_failure
+#
+create resource allow_account_check_failure
+set resource allow_account_check_failure type = boolean
+set resource allow_account_check_failure flag = r
+#
+# Create and define resource debug
+#
+create resource debug
+set resource debug type = boolean
+set resource debug flag = hr
+#
+# Create and define resource build
+#
+create resource build
+set resource build type = boolean
+set resource build flag = hr

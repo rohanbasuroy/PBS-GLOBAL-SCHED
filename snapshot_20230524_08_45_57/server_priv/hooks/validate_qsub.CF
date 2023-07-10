@@ -1,0 +1,9 @@
+{
+    "forbidden_resources": ["preempt_targets"],
+    "required_resources": ["walltime", "filesystems"],
+    "manager_allow": ["preempt_targets"],
+    "operator_allow": [],
+    "required_attributes": ["Account_Name"],
+    "forbidden_attributes": ["project", "Checkpoint", "group_list", "User_List", "Keep_Files"],
+    "default_attribute_override": {"Keep_Files": "doe"}
+}

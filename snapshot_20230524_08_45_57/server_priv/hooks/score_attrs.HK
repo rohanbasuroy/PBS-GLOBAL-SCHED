@@ -1,0 +1,3 @@
+hook_name=score_attrs
+enabled=false
+event=queuejob,modifyjob

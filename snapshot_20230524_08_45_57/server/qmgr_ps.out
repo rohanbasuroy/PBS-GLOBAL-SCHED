@@ -1,0 +1,597 @@
+#
+# Create resources and set their properties.
+#
+#
+# Create and define resource system
+#
+create resource system
+set resource system type = string
+set resource system flag = h
+#
+# Create and define resource ngpus
+#
+create resource ngpus
+set resource ngpus type = long
+set resource ngpus flag = hn
+#
+# Create and define resource ns
+#
+create resource ns
+set resource ns type = boolean
+set resource ns flag = h
+#
+# Create and define resource ns1
+#
+create resource ns1
+set resource ns1 type = boolean
+set resource ns1 flag = h
+#
+# Create and define resource tier0
+#
+create resource tier0
+set resource tier0 type = string_array
+set resource tier0 flag = h
+#
+# Create and define resource tier1
+#
+create resource tier1
+set resource tier1 type = string_array
+set resource tier1 flag = h
+#
+# Create and define resource milan
+#
+create resource milan
+set resource milan type = boolean
+set resource milan flag = h
+#
+# Create and define resource cpu_type
+#
+create resource cpu_type
+set resource cpu_type type = string
+set resource cpu_type flag = h
+#
+# Create and define resource gputype
+#
+create resource gputype
+set resource gputype type = string_array
+set resource gputype flag = h
+#
+# Create and define resource singularity_fakeroot
+#
+create resource singularity_fakeroot
+set resource singularity_fakeroot type = boolean
+#
+# Create and define resource ni_resource
+#
+create resource ni_resource
+set resource ni_resource type = string
+set resource ni_resource flag = r
+#
+# Create and define resource allow_negative_allocation
+#
+create resource allow_negative_allocation
+set resource allow_negative_allocation type = boolean
+set resource allow_negative_allocation flag = r
+#
+# Create and define resource total_allocation
+#
+create resource total_allocation
+set resource total_allocation type = float
+set resource total_allocation flag = r
+#
+# Create and define resource current_allocation
+#
+create resource current_allocation
+set resource current_allocation type = float
+set resource current_allocation flag = r
+#
+# Create and define resource award_category
+#
+create resource award_category
+set resource award_category type = string
+set resource award_category flag = r
+#
+# Create and define resource award_type
+#
+create resource award_type
+set resource award_type type = string
+set resource award_type flag = r
+#
+# Create and define resource burn_ratio
+#
+create resource burn_ratio
+set resource burn_ratio type = float
+set resource burn_ratio flag = r
+#
+# Create and define resource route_backfill
+#
+create resource route_backfill
+set resource route_backfill type = boolean
+set resource route_backfill flag = r
+#
+# Create and define resource overburn
+#
+create resource overburn
+set resource overburn type = boolean
+set resource overburn flag = r
+#
+# Create and define resource demand
+#
+create resource demand
+set resource demand type = boolean
+set resource demand flag = hr
+#
+# Create and define resource backfill_factor
+#
+create resource backfill_factor
+set resource backfill_factor type = float
+set resource backfill_factor flag = r
+#
+# Create and define resource backfill_max
+#
+create resource backfill_max
+set resource backfill_max type = float
+set resource backfill_max flag = r
+#
+# Create and define resource base_score
+#
+create resource base_score
+set resource base_score type = float
+set resource base_score flag = r
+#
+# Create and define resource enable_backfill
+#
+create resource enable_backfill
+set resource enable_backfill type = float
+set resource enable_backfill flag = r
+#
+# Create and define resource enable_fifo
+#
+create resource enable_fifo
+set resource enable_fifo type = float
+set resource enable_fifo flag = r
+#
+# Create and define resource fifo_factor
+#
+create resource fifo_factor
+set resource fifo_factor type = float
+set resource fifo_factor flag = r
+#
+# Create and define resource enable_wfp
+#
+create resource enable_wfp
+set resource enable_wfp type = float
+set resource enable_wfp flag = r
+#
+# Create and define resource project_priority
+#
+create resource project_priority
+set resource project_priority type = float
+set resource project_priority flag = r
+#
+# Create and define resource score_boost
+#
+create resource score_boost
+set resource score_boost type = float
+set resource score_boost flag = r
+#
+# Create and define resource total_cpus
+#
+create resource total_cpus
+set resource total_cpus type = float
+set resource total_cpus flag = r
+#
+# Create and define resource wfp_factor
+#
+create resource wfp_factor
+set resource wfp_factor type = float
+set resource wfp_factor flag = r
+#
+# Create and define resource filesystems
+#
+create resource filesystems
+set resource filesystems type = string
+#
+# Create and define resource valid_filesystems
+#
+create resource valid_filesystems
+set resource valid_filesystems type = string_array
+set resource valid_filesystems flag = r
+#
+# Create and define resource grand_fs
+#
+create resource grand_fs
+set resource grand_fs type = boolean
+set resource grand_fs flag = r
+#
+# Create and define resource eagle_fs
+#
+create resource eagle_fs
+set resource eagle_fs type = boolean
+set resource eagle_fs flag = r
+#
+# Create and define resource home_fs
+#
+create resource home_fs
+set resource home_fs type = boolean
+set resource home_fs flag = r
+#
+# Create and define resource swift_fs
+#
+create resource swift_fs
+set resource swift_fs type = boolean
+set resource swift_fs flag = r
+#
+# Create and define resource allow_account_check_failure
+#
+create resource allow_account_check_failure
+set resource allow_account_check_failure type = boolean
+set resource allow_account_check_failure flag = r
+#
+# Create and define resource debug
+#
+create resource debug
+set resource debug type = boolean
+set resource debug flag = hr
+#
+# Create and define resource build
+#
+create resource build
+set resource build type = boolean
+set resource build flag = hr
+#
+# Create queues and set their attributes.
+#
+#
+# Create and define queue run_next
+#
+create queue run_next
+set queue run_next queue_type = Execution
+set queue run_next Priority = 100
+set queue run_next acl_user_enable = True
+set queue run_next acl_users = +jenkinsat@*
+set queue run_next enabled = False
+set queue run_next started = False
+#
+# Create and define queue debug
+#
+create queue debug
+set queue debug queue_type = Execution
+set queue debug Priority = 100
+set queue debug resources_max.nodect = 2
+set queue debug resources_max.walltime = 01:00:00
+set queue debug resources_min.nodect = 1
+set queue debug resources_min.walltime = 00:05:00
+set queue debug resources_default.base_score = 51
+set queue debug resources_default.enable_fifo = 1
+set queue debug default_chunk.build = False
+set queue debug default_chunk.demand = False
+set queue debug default_chunk.system = polaris
+set queue debug max_run = [u:PBS_GENERIC=1]
+set queue debug max_run_res.nodect = [o:PBS_ALL=8]
+set queue debug enabled = True
+set queue debug started = True
+set queue debug queued_jobs_threshold = [u:PBS_GENERIC=1]
+#
+# Create and define queue debug-scaling
+#
+create queue debug-scaling
+set queue debug-scaling queue_type = Execution
+set queue debug-scaling Priority = 100
+set queue debug-scaling max_queued = [u:PBS_GENERIC=1]
+set queue debug-scaling resources_max.nodect = 10
+set queue debug-scaling resources_max.walltime = 01:00:00
+set queue debug-scaling resources_min.nodect = 1
+set queue debug-scaling resources_min.walltime = 00:05:00
+set queue debug-scaling resources_default.base_score = 51
+set queue debug-scaling resources_default.enable_fifo = 1
+set queue debug-scaling default_chunk.build = False
+set queue debug-scaling default_chunk.debug = False
+set queue debug-scaling default_chunk.demand = False
+set queue debug-scaling default_chunk.system = polaris
+set queue debug-scaling enabled = True
+set queue debug-scaling started = True
+#
+# Create and define queue prod
+#
+create queue prod
+set queue prod queue_type = Route
+set queue prod max_queued = [p:PBS_GENERIC=100]
+set queue prod resources_max.nodect = 496
+set queue prod resources_max.walltime = 24:00:00
+set queue prod resources_min.nodect = 10
+set queue prod resources_min.walltime = 00:05:00
+set queue prod route_destinations = small
+set queue prod route_destinations += medium
+set queue prod route_destinations += large
+set queue prod route_destinations += backfill-small
+set queue prod route_destinations += backfill-medium
+set queue prod route_destinations += backfill-large
+set queue prod enabled = True
+set queue prod started = True
+#
+# Create and define queue small
+#
+create queue small
+set queue small queue_type = Execution
+set queue small Priority = 150
+set queue small max_queued = [p:PBS_GENERIC=10]
+set queue small from_route_only = True
+set queue small resources_max.nodect = 24
+set queue small resources_max.overburn = False
+set queue small resources_max.route_backfill = False
+set queue small resources_max.walltime = 03:00:00
+set queue small resources_min.nodect = 10
+set queue small resources_min.overburn = False
+set queue small resources_min.route_backfill = False
+set queue small resources_min.walltime = 00:05:00
+set queue small resources_default.base_score = 51
+set queue small resources_default.enable_wfp = 1
+set queue small default_chunk.build = False
+set queue small default_chunk.debug = False
+set queue small default_chunk.demand = False
+set queue small default_chunk.system = polaris
+set queue small enabled = True
+set queue small started = True
+#
+# Create and define queue medium
+#
+create queue medium
+set queue medium queue_type = Execution
+set queue medium Priority = 150
+set queue medium max_queued = [p:PBS_GENERIC=10]
+set queue medium from_route_only = True
+set queue medium resources_max.nodect = 99
+set queue medium resources_max.overburn = False
+set queue medium resources_max.route_backfill = False
+set queue medium resources_max.walltime = 06:00:00
+set queue medium resources_min.nodect = 25
+set queue medium resources_min.overburn = False
+set queue medium resources_min.route_backfill = False
+set queue medium resources_min.walltime = 00:05:00
+set queue medium resources_default.base_score = 51
+set queue medium resources_default.enable_wfp = 1
+set queue medium default_chunk.build = False
+set queue medium default_chunk.debug = False
+set queue medium default_chunk.demand = False
+set queue medium default_chunk.system = polaris
+set queue medium enabled = True
+set queue medium started = True
+#
+# Create and define queue large
+#
+create queue large
+set queue large queue_type = Execution
+set queue large Priority = 150
+set queue large max_queued = [p:PBS_GENERIC=10]
+set queue large from_route_only = True
+set queue large resources_max.nodect = 496
+set queue large resources_max.route_backfill = False
+set queue large resources_max.walltime = 24:00:00
+set queue large resources_min.nodect = 100
+set queue large resources_min.route_backfill = False
+set queue large resources_min.walltime = 00:05:00
+set queue large resources_default.base_score = 51
+set queue large resources_default.enable_wfp = 1
+set queue large default_chunk.build = False
+set queue large default_chunk.debug = False
+set queue large default_chunk.demand = False
+set queue large default_chunk.system = polaris
+set queue large enabled = True
+set queue large started = True
+#
+# Create and define queue backfill-small
+#
+create queue backfill-small
+set queue backfill-small queue_type = Execution
+set queue backfill-small Priority = 1
+set queue backfill-small max_queued = [p:PBS_GENERIC=10]
+set queue backfill-small from_route_only = True
+set queue backfill-small resources_max.nodect = 24
+set queue backfill-small resources_max.walltime = 03:00:00
+set queue backfill-small resources_min.nodect = 10
+set queue backfill-small resources_min.walltime = 00:05:00
+set queue backfill-small resources_default.enable_backfill = 1
+set queue backfill-small default_chunk.build = False
+set queue backfill-small default_chunk.debug = False
+set queue backfill-small default_chunk.demand = False
+set queue backfill-small default_chunk.system = polaris
+set queue backfill-small enabled = True
+set queue backfill-small started = True
+#
+# Create and define queue backfill-medium
+#
+create queue backfill-medium
+set queue backfill-medium queue_type = Execution
+set queue backfill-medium Priority = 1
+set queue backfill-medium max_queued = [p:PBS_GENERIC=10]
+set queue backfill-medium from_route_only = True
+set queue backfill-medium resources_max.nodect = 99
+set queue backfill-medium resources_max.walltime = 06:00:00
+set queue backfill-medium resources_min.nodect = 25
+set queue backfill-medium resources_min.walltime = 00:05:00
+set queue backfill-medium resources_default.enable_backfill = 1
+set queue backfill-medium default_chunk.build = False
+set queue backfill-medium default_chunk.debug = False
+set queue backfill-medium default_chunk.demand = False
+set queue backfill-medium default_chunk.system = polaris
+set queue backfill-medium enabled = True
+set queue backfill-medium started = True
+#
+# Create and define queue backfill-large
+#
+create queue backfill-large
+set queue backfill-large queue_type = Execution
+set queue backfill-large Priority = 1
+set queue backfill-large max_queued = [p:PBS_GENERIC=10]
+set queue backfill-large from_route_only = True
+set queue backfill-large resources_max.nodect = 496
+set queue backfill-large resources_max.route_backfill = True
+set queue backfill-large resources_max.walltime = 24:00:00
+set queue backfill-large resources_min.nodect = 100
+set queue backfill-large resources_min.route_backfill = True
+set queue backfill-large resources_min.walltime = 00:05:00
+set queue backfill-large resources_default.enable_backfill = 1
+set queue backfill-large default_chunk.build = False
+set queue backfill-large default_chunk.debug = False
+set queue backfill-large default_chunk.demand = False
+set queue backfill-large default_chunk.system = polaris
+set queue backfill-large enabled = True
+set queue backfill-large started = True
+#
+# Create and define queue preemptable
+#
+create queue preemptable
+set queue preemptable queue_type = Execution
+set queue preemptable Priority = 0
+set queue preemptable max_queued = [p:PBS_GENERIC=20]
+set queue preemptable resources_max.nodect = 10
+set queue preemptable resources_max.walltime = 72:00:00
+set queue preemptable resources_min.nodect = 1
+set queue preemptable resources_default.enable_fifo = 1
+set queue preemptable default_chunk.build = False
+set queue preemptable default_chunk.debug = False
+set queue preemptable default_chunk.demand = True
+set queue preemptable default_chunk.system = polaris
+set queue preemptable enabled = True
+set queue preemptable started = True
+#
+# Create and define queue demand
+#
+create queue demand
+set queue demand queue_type = Execution
+set queue demand Priority = 150
+set queue demand max_queued = [p:PBS_GENERIC=100]
+set queue demand resources_max.nodect = 56
+set queue demand resources_max.walltime = 01:00:00
+set queue demand resources_min.nodect = 1
+set queue demand resources_default.allow_negative_allocation = True
+set queue demand resources_default.enable_fifo = 1
+set queue demand resources_default.preempt_targets = Queue=preemptable
+set queue demand acl_group_enable = True
+set queue demand acl_groups = APSDataProcessing
+set queue demand acl_groups += aps26id
+set queue demand acl_groups += aps2id
+set queue demand acl_groups += aps34ide
+set queue demand acl_groups += aps8idi
+set queue demand default_chunk.build = False
+set queue demand default_chunk.demand = True
+set queue demand default_chunk.system = polaris
+set queue demand enabled = True
+set queue demand started = True
+#
+# Create and define queue tagger
+#
+create queue tagger
+set queue tagger queue_type = Execution
+set queue tagger acl_user_enable = True
+set queue tagger acl_users = +cadams@*
+set queue tagger acl_users += +leggett@*
+set queue tagger resources_default.base_score = 5000
+set queue tagger resources_default.enable_fifo = 3
+set queue tagger enabled = True
+set queue tagger started = False
+#
+# Create and define queue noise
+#
+create queue noise
+set queue noise queue_type = Execution
+set queue noise acl_user_enable = True
+set queue noise acl_users = +leggett@*
+set queue noise resources_default.base_score = 51
+set queue noise resources_default.enable_fifo = 1
+set queue noise enabled = True
+set queue noise started = False
+#
+# Create and define queue build
+#
+create queue build
+set queue build queue_type = Execution
+set queue build acl_users = allcock@*
+set queue build acl_users += ascovel@*
+set queue build acl_users += cblackworth@*
+set queue build acl_users += mluczkow@*
+set queue build acl_users += richp@*
+set queue build resources_max.ncpus = 36
+set queue build resources_max.ngpus = 1
+set queue build resources_min.ncpus = 36
+set queue build resources_min.ngpus = 1
+set queue build default_chunk.build = True
+set queue build default_chunk.debug = False
+set queue build default_chunk.demand = True
+set queue build default_chunk.ncpus = 36
+set queue build default_chunk.ngpus = 1
+set queue build default_chunk.system = polaris
+set queue build enabled = True
+set queue build started = True
+#
+# Set server attributes.
+#
+set server scheduling = True
+set server managers = allcock@*
+set server managers += ascovel@*
+set server managers += blenard@*
+set server managers += cblackworth@*
+set server managers += grog@*
+set server managers += gwest@*
+set server managers += homerdin@*
+set server managers += jbouvet@*
+set server managers += leggett@*
+set server managers += mluczkow@*
+set server managers += pershey@*
+set server managers += richp@*
+set server managers += toonen@*
+set server managers += zpettit@*
+set server operators = appmm2pbs@*
+set server default_queue = prod
+set server log_events = 2047
+set server mailer = /usr/sbin/sendmail
+set server mail_from = cobalt@alcf.anl.gov
+set server query_other_jobs = True
+set server resources_available.eagle_fs = True
+set server resources_available.grand_fs = True
+set server resources_available.home_fs = True
+set server resources_available.swift_fs = True
+set server resources_available.valid_filesystems = home_fs
+set server resources_available.valid_filesystems += swift_fs
+set server resources_available.valid_filesystems += grand_fs
+set server resources_available.valid_filesystems += eagle_fs
+set server resources_default.allow_account_check_failure = True
+set server resources_default.allow_negative_allocation = True
+set server resources_default.backfill_factor = 84600
+set server resources_default.backfill_max = 50
+set server resources_default.base_score = 0
+set server resources_default.enable_backfill = 0
+set server resources_default.enable_fifo = 0
+set server resources_default.enable_wfp = 0
+set server resources_default.fifo_factor = 1800
+set server resources_default.ncpus = 1
+set server resources_default.ni_resource = polaris
+set server resources_default.preempt_targets = NONE
+set server resources_default.score_boost = 0
+set server resources_default.total_cpus = 560
+set server resources_default.wfp_factor = 100000
+set server default_chunk.ncpus = 64
+set server scheduler_iteration = 600
+set server flatuid = True
+set server resv_enable = True
+set server node_fail_requeue = 310
+set server max_array_size = 10000
+set server node_group_enable = True
+set server node_group_key = tier0
+set server node_group_key += tier1
+set server node_group_key += system
+set server default_qsub_arguments = "-k doe -r n -W umask=0022"
+set server pbs_license_info = 6200@license-polaris-01.lab.alcf.anl.gov:6200@license-polaris-02.lab.alcf.anl.gov:6200@license-polaris-03.lab.alcf.anl.gov
+set server pbs_license_min = 1120
+set server pbs_license_max = 1200
+set server pbs_license_linger_time = 31536000
+set server job_sort_formula = "base_score + score_boost + (enable_wfp * wfp_factor * (eligible_time ** 2 / min(max(walltime,21600.0),43200.0) ** 3  * project_priority * nodect / total_cpus)) + (enable_backfill * min(backfill_max, eligible_time / backfill_factor)) + (enable_fifo * eligible_time / fifo_factor)"
+set server eligible_time_enable = True
+set server job_history_enable = True
+set server max_concurrent_provision = 5
+set server backfill_depth = 10
+set server python_restart_max_hooks = 1000000000
+set server python_restart_max_objects = 1000000000
+set server python_restart_min_interval = 123127:46:40
+set server max_job_sequence_id = 9999999

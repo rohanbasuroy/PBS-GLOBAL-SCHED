@@ -1,0 +1,326 @@
+#
+# Create queues and set their attributes.
+#
+#
+# Create and define queue run_next
+#
+create queue run_next
+set queue run_next queue_type = Execution
+set queue run_next Priority = 100
+set queue run_next acl_user_enable = True
+set queue run_next acl_users = +jenkinsat@*
+set queue run_next enabled = False
+set queue run_next started = False
+#
+# Create and define queue debug
+#
+create queue debug
+set queue debug queue_type = Execution
+set queue debug Priority = 100
+set queue debug resources_max.nodect = 2
+set queue debug resources_max.walltime = 01:00:00
+set queue debug resources_min.nodect = 1
+set queue debug resources_min.walltime = 00:05:00
+set queue debug resources_default.base_score = 51
+set queue debug resources_default.enable_fifo = 1
+set queue debug default_chunk.build = False
+set queue debug default_chunk.demand = False
+set queue debug default_chunk.system = polaris
+set queue debug max_run = [u:PBS_GENERIC=1]
+set queue debug max_run_res.nodect = [o:PBS_ALL=8]
+set queue debug enabled = True
+set queue debug started = True
+set queue debug queued_jobs_threshold = [u:PBS_GENERIC=1]
+#
+# Create and define queue debug-scaling
+#
+create queue debug-scaling
+set queue debug-scaling queue_type = Execution
+set queue debug-scaling Priority = 100
+set queue debug-scaling max_queued = [u:PBS_GENERIC=1]
+set queue debug-scaling resources_max.nodect = 10
+set queue debug-scaling resources_max.walltime = 01:00:00
+set queue debug-scaling resources_min.nodect = 1
+set queue debug-scaling resources_min.walltime = 00:05:00
+set queue debug-scaling resources_default.base_score = 51
+set queue debug-scaling resources_default.enable_fifo = 1
+set queue debug-scaling default_chunk.build = False
+set queue debug-scaling default_chunk.debug = False
+set queue debug-scaling default_chunk.demand = False
+set queue debug-scaling default_chunk.system = polaris
+set queue debug-scaling enabled = True
+set queue debug-scaling started = True
+#
+# Create and define queue prod
+#
+create queue prod
+set queue prod queue_type = Route
+set queue prod max_queued = [p:PBS_GENERIC=100]
+set queue prod resources_max.nodect = 496
+set queue prod resources_max.walltime = 24:00:00
+set queue prod resources_min.nodect = 10
+set queue prod resources_min.walltime = 00:05:00
+set queue prod route_destinations = small
+set queue prod route_destinations += medium
+set queue prod route_destinations += large
+set queue prod route_destinations += backfill-small
+set queue prod route_destinations += backfill-medium
+set queue prod route_destinations += backfill-large
+set queue prod enabled = True
+set queue prod started = True
+#
+# Create and define queue small
+#
+create queue small
+set queue small queue_type = Execution
+set queue small Priority = 150
+set queue small max_queued = [p:PBS_GENERIC=10]
+set queue small from_route_only = True
+set queue small resources_max.nodect = 24
+set queue small resources_max.overburn = False
+set queue small resources_max.route_backfill = False
+set queue small resources_max.walltime = 03:00:00
+set queue small resources_min.nodect = 10
+set queue small resources_min.overburn = False
+set queue small resources_min.route_backfill = False
+set queue small resources_min.walltime = 00:05:00
+set queue small resources_default.base_score = 51
+set queue small resources_default.enable_wfp = 1
+set queue small default_chunk.build = False
+set queue small default_chunk.debug = False
+set queue small default_chunk.demand = False
+set queue small default_chunk.system = polaris
+set queue small enabled = True
+set queue small started = True
+#
+# Create and define queue medium
+#
+create queue medium
+set queue medium queue_type = Execution
+set queue medium Priority = 150
+set queue medium max_queued = [p:PBS_GENERIC=10]
+set queue medium from_route_only = True
+set queue medium resources_max.nodect = 99
+set queue medium resources_max.overburn = False
+set queue medium resources_max.route_backfill = False
+set queue medium resources_max.walltime = 06:00:00
+set queue medium resources_min.nodect = 25
+set queue medium resources_min.overburn = False
+set queue medium resources_min.route_backfill = False
+set queue medium resources_min.walltime = 00:05:00
+set queue medium resources_default.base_score = 51
+set queue medium resources_default.enable_wfp = 1
+set queue medium default_chunk.build = False
+set queue medium default_chunk.debug = False
+set queue medium default_chunk.demand = False
+set queue medium default_chunk.system = polaris
+set queue medium enabled = True
+set queue medium started = True
+#
+# Create and define queue large
+#
+create queue large
+set queue large queue_type = Execution
+set queue large Priority = 150
+set queue large max_queued = [p:PBS_GENERIC=10]
+set queue large from_route_only = True
+set queue large resources_max.nodect = 496
+set queue large resources_max.route_backfill = False
+set queue large resources_max.walltime = 24:00:00
+set queue large resources_min.nodect = 100
+set queue large resources_min.route_backfill = False
+set queue large resources_min.walltime = 00:05:00
+set queue large resources_default.base_score = 51
+set queue large resources_default.enable_wfp = 1
+set queue large default_chunk.build = False
+set queue large default_chunk.debug = False
+set queue large default_chunk.demand = False
+set queue large default_chunk.system = polaris
+set queue large enabled = True
+set queue large started = True
+#
+# Create and define queue backfill-small
+#
+create queue backfill-small
+set queue backfill-small queue_type = Execution
+set queue backfill-small Priority = 1
+set queue backfill-small max_queued = [p:PBS_GENERIC=10]
+set queue backfill-small from_route_only = True
+set queue backfill-small resources_max.nodect = 24
+set queue backfill-small resources_max.walltime = 03:00:00
+set queue backfill-small resources_min.nodect = 10
+set queue backfill-small resources_min.walltime = 00:05:00
+set queue backfill-small resources_default.enable_backfill = 1
+set queue backfill-small default_chunk.build = False
+set queue backfill-small default_chunk.debug = False
+set queue backfill-small default_chunk.demand = False
+set queue backfill-small default_chunk.system = polaris
+set queue backfill-small enabled = True
+set queue backfill-small started = True
+#
+# Create and define queue backfill-medium
+#
+create queue backfill-medium
+set queue backfill-medium queue_type = Execution
+set queue backfill-medium Priority = 1
+set queue backfill-medium max_queued = [p:PBS_GENERIC=10]
+set queue backfill-medium from_route_only = True
+set queue backfill-medium resources_max.nodect = 99
+set queue backfill-medium resources_max.walltime = 06:00:00
+set queue backfill-medium resources_min.nodect = 25
+set queue backfill-medium resources_min.walltime = 00:05:00
+set queue backfill-medium resources_default.enable_backfill = 1
+set queue backfill-medium default_chunk.build = False
+set queue backfill-medium default_chunk.debug = False
+set queue backfill-medium default_chunk.demand = False
+set queue backfill-medium default_chunk.system = polaris
+set queue backfill-medium enabled = True
+set queue backfill-medium started = True
+#
+# Create and define queue backfill-large
+#
+create queue backfill-large
+set queue backfill-large queue_type = Execution
+set queue backfill-large Priority = 1
+set queue backfill-large max_queued = [p:PBS_GENERIC=10]
+set queue backfill-large from_route_only = True
+set queue backfill-large resources_max.nodect = 496
+set queue backfill-large resources_max.route_backfill = True
+set queue backfill-large resources_max.walltime = 24:00:00
+set queue backfill-large resources_min.nodect = 100
+set queue backfill-large resources_min.route_backfill = True
+set queue backfill-large resources_min.walltime = 00:05:00
+set queue backfill-large resources_default.enable_backfill = 1
+set queue backfill-large default_chunk.build = False
+set queue backfill-large default_chunk.debug = False
+set queue backfill-large default_chunk.demand = False
+set queue backfill-large default_chunk.system = polaris
+set queue backfill-large enabled = True
+set queue backfill-large started = True
+#
+# Create and define queue preemptable
+#
+create queue preemptable
+set queue preemptable queue_type = Execution
+set queue preemptable Priority = 0
+set queue preemptable max_queued = [p:PBS_GENERIC=20]
+set queue preemptable resources_max.nodect = 10
+set queue preemptable resources_max.walltime = 72:00:00
+set queue preemptable resources_min.nodect = 1
+set queue preemptable resources_default.enable_fifo = 1
+set queue preemptable default_chunk.build = False
+set queue preemptable default_chunk.debug = False
+set queue preemptable default_chunk.demand = True
+set queue preemptable default_chunk.system = polaris
+set queue preemptable enabled = True
+set queue preemptable started = True
+#
+# Create and define queue demand
+#
+create queue demand
+set queue demand queue_type = Execution
+set queue demand Priority = 150
+set queue demand max_queued = [p:PBS_GENERIC=100]
+set queue demand resources_max.nodect = 56
+set queue demand resources_max.walltime = 01:00:00
+set queue demand resources_min.nodect = 1
+set queue demand resources_default.allow_negative_allocation = True
+set queue demand resources_default.enable_fifo = 1
+set queue demand resources_default.preempt_targets = Queue=preemptable
+set queue demand acl_group_enable = True
+set queue demand acl_groups = APSDataProcessing
+set queue demand acl_groups += aps26id
+set queue demand acl_groups += aps2id
+set queue demand acl_groups += aps34ide
+set queue demand acl_groups += aps8idi
+set queue demand default_chunk.build = False
+set queue demand default_chunk.demand = True
+set queue demand default_chunk.system = polaris
+set queue demand enabled = True
+set queue demand started = True
+#
+# Create and define queue tagger
+#
+create queue tagger
+set queue tagger queue_type = Execution
+set queue tagger acl_user_enable = True
+set queue tagger acl_users = +cadams@*
+set queue tagger acl_users += +leggett@*
+set queue tagger resources_default.base_score = 5000
+set queue tagger resources_default.enable_fifo = 3
+set queue tagger enabled = True
+set queue tagger started = False
+#
+# Create and define queue noise
+#
+create queue noise
+set queue noise queue_type = Execution
+set queue noise acl_user_enable = True
+set queue noise acl_users = +leggett@*
+set queue noise resources_default.base_score = 51
+set queue noise resources_default.enable_fifo = 1
+set queue noise enabled = True
+set queue noise started = False
+#
+# Create and define queue build
+#
+create queue build
+set queue build queue_type = Execution
+set queue build acl_users = allcock@*
+set queue build acl_users += ascovel@*
+set queue build acl_users += cblackworth@*
+set queue build acl_users += mluczkow@*
+set queue build acl_users += richp@*
+set queue build resources_max.ncpus = 36
+set queue build resources_max.ngpus = 1
+set queue build resources_min.ncpus = 36
+set queue build resources_min.ngpus = 1
+set queue build default_chunk.build = True
+set queue build default_chunk.debug = False
+set queue build default_chunk.demand = True
+set queue build default_chunk.ncpus = 36
+set queue build default_chunk.ngpus = 1
+set queue build default_chunk.system = polaris
+set queue build enabled = True
+set queue build started = True
+#
+# Create and define queue M485344
+#
+create queue M485344
+set queue M485344 queue_type = Execution
+set queue M485344 acl_user_enable = True
+set queue M485344 acl_users = allcock@polaris-login-01.hsn.cm.polaris.alcf.anl.gov
+set queue M485344 acl_users += mprince@*
+set queue M485344 resources_max.allow_account_check_failure = True
+set queue M485344 resources_max.allow_negative_allocation = True
+set queue M485344 resources_max.backfill_factor = 84600
+set queue M485344 resources_max.backfill_max = 50
+set queue M485344 resources_max.base_score = 0
+set queue M485344 resources_max.enable_backfill = 0
+set queue M485344 resources_max.enable_fifo = 0
+set queue M485344 resources_max.enable_wfp = 0
+set queue M485344 resources_max.fifo_factor = 1800
+set queue M485344 resources_max.ncpus = 64
+set queue M485344 resources_max.ni_resource = polaris
+set queue M485344 resources_max.preempt_targets = NONE
+set queue M485344 resources_max.score_boost = 0
+set queue M485344 resources_max.total_cpus = 560
+set queue M485344 resources_max.wfp_factor = 100000
+set queue M485344 resources_available.allow_account_check_failure = True
+set queue M485344 resources_available.allow_negative_allocation = True
+set queue M485344 resources_available.backfill_factor = 84600
+set queue M485344 resources_available.backfill_max = 50
+set queue M485344 resources_available.base_score = 0
+set queue M485344 resources_available.enable_backfill = 0
+set queue M485344 resources_available.enable_fifo = 0
+set queue M485344 resources_available.enable_wfp = 0
+set queue M485344 resources_available.fifo_factor = 1800
+set queue M485344 resources_available.ncpus = 64
+set queue M485344 resources_available.ni_resource = polaris
+set queue M485344 resources_available.preempt_targets = NONE
+set queue M485344 resources_available.score_boost = 0
+set queue M485344 resources_available.total_cpus = 560
+set queue M485344 resources_available.wfp_factor = 100000
+set queue M485344 enabled = True
+set queue M485344 started = True
+set queue M485344 partition = pbs-default

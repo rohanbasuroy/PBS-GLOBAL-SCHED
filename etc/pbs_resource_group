@@ -1,0 +1,34 @@
+# Copyright (C) 2003-2022 Altair Engineering, Inc. All rights reserved.
+# Copyright notice does not imply publication.
+#
+# ALTAIR ENGINEERING INC. Proprietary and Confidential. Contains Trade Secret
+# Information. Not for use or disclosure outside of Licensee's organization.
+# The software and information contained herein may only be used internally and
+# is provided on a non-exclusive, non-transferable basis. License may not
+# sublicense, sell, lend, assign, rent, distribute, publicly display or
+# publicly perform the software or other information provided herein,
+# nor is Licensee permitted to decompile, reverse engineer, or
+# disassemble the software. Usage of the software and other information
+# provided by Altair(or its resellers) is only as explicitly stated in the
+# applicable end user license agreement between Altair and Licensee.
+# In the absence of such agreement, the Altair standard end user
+# license agreement terms shall govern.
+
+#
+
+#grp1	50	root	10
+#grp2	51	root	20
+#grp3	52	root	10
+#grp4	53	grp1	20
+#grp5 	54	grp1	10
+#grp6	55	grp2	20
+#usr1	60	root	5
+#usr2	61	grp1	10
+#usr3	62	grp2	10
+#usr4	63	grp6	10
+#usr5	64	grp6	10
+#usr6	65	grp6	20
+#usr7	66	grp3	10
+#usr8	67	grp4	10
+#usr9	68	grp4	10
+#usr10	69	grp5	10

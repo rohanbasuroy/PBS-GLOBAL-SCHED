@@ -1,0 +1,8 @@
+type=pbs
+enabled=false
+debug=false
+user=pbsadmin
+event=queuejob,exechost_startup,execjob_begin,execjob_end,execjob_epilogue,execjob_launch,execjob_postsuspend,execjob_preresume,exechost_periodic
+order=120
+alarm=90
+freq=20

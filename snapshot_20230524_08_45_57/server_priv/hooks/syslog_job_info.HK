@@ -1,0 +1,3 @@
+hook_name=syslog_job_info
+enabled=false
+event=execjob_prologue,execjob_epilogue

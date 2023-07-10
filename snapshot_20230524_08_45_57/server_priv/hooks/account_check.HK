@@ -1,0 +1,2 @@
+hook_name=account_check
+event=queuejob,modifyjob

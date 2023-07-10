@@ -1,0 +1,2 @@
+hook_name=pbs_admin_hook_gc_collect
+event=jobobit

@@ -1,0 +1,2 @@
+hook_name=no_user_rsub
+event=resvsub

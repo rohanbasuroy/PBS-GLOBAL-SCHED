@@ -1,0 +1,3 @@
+hook_name=mom_node_cleanup
+enabled=false
+event=execjob_epilogue

@@ -1,0 +1,2 @@
+hook_name=set_default_email
+event=queuejob

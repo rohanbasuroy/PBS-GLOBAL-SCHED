@@ -1,0 +1,5 @@
+hook_name=logue_launcher
+fail_action=offline_vnodes
+event=runjob,execjob_begin,execjob_end,exechost_periodic
+alarm=300
+freq=300

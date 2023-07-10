@@ -1,0 +1,4 @@
+hook_name=chc_hook
+enabled=false
+event=execjob_epilogue
+alarm=150

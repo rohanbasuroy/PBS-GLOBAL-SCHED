@@ -1,0 +1,7 @@
+type=pbs
+enabled=false
+debug=false
+event=queuejob,execjob_end,execjob_launch,exechost_periodic
+order=110
+alarm=180
+freq=30

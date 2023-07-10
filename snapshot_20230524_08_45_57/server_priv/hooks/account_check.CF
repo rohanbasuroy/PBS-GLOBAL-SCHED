@@ -1,0 +1,77 @@
+{
+    "aux_lib_paths": [
+        "/var/spool/pbs/nirest",
+        "/usr/local/lib/python3.6/site-packages",
+        "/usr/lib/python3.6/site-packages"
+    ],
+    "default_ni_resource": "polaris",
+    "ignore_negative_balance": [
+        "Operations",
+        "Maintenance",
+        "datascience",
+        "Performance",
+        "Support",
+        "Catalyst",
+        "Intel"
+    ],
+    "default_project_priority": 2.0,
+    "award_category": {
+        "INCITE": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 11,
+            "overburn_ratio": 1.25,
+            "project_priority": 25.0
+        },
+        "ALCC": {
+            "overburn_start_month": 7,
+            "overburn_end_month": 5,
+            "overburn_ratio": 1.25,
+            "project_priority": 25.0
+        }
+    },
+    "award_type": {},
+    "project_override": {
+        "datascience": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.00,
+            "project_priority": 20.0
+        },
+        "Operations": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.00,
+            "project_priority": 20.0
+        },
+        "Maintenance": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.5,
+            "project_priority": 20.0
+        },
+        "Performance": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.00,
+            "project_priority": 20.0
+        },
+        "Support": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.00,
+            "project_priority": 20.0
+        },
+        "Catalyst": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.00,
+            "project_priority": 20.0
+        },
+        "Intel": {
+            "overburn_start_month": 1,
+            "overburn_end_month": 12,
+            "overburn_ratio": 1.00,
+            "project_priority": 20.0
+        }
+    }
+}

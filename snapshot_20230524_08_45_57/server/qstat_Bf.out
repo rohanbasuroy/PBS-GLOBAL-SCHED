@@ -1,0 +1,71 @@
+Server: polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov
+    server_state = Active
+    server_host = polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov
+    scheduling = True
+    total_jobs = 5195
+    state_count = Transit:0 Queued:123 Held:33 Waiting:0 Running:46 Exiting:0 B
+	egun:0 
+    managers = allcock@*,ascovel@*,blenard@*,cblackworth@*,grog@*,gwest@*,
+	homerdin@*,jbouvet@*,leggett@*,mluczkow@*,pershey@*,richp@*,toonen@*,
+	zpettit@*
+    operators = appmm2pbs@*
+    default_queue = prod
+    log_events = 2047
+    mailer = /usr/sbin/sendmail
+    mail_from = cobalt@alcf.anl.gov
+    query_other_jobs = True
+    resources_available.eagle_fs = True
+    resources_available.grand_fs = True
+    resources_available.home_fs = True
+    resources_available.swift_fs = True
+    resources_available.valid_filesystems = home_fs,swift_fs,grand_fs,eagle_fs
+    resources_default.allow_account_check_failure = True
+    resources_default.allow_negative_allocation = True
+    resources_default.backfill_factor = 84600
+    resources_default.backfill_max = 50
+    resources_default.base_score = 0
+    resources_default.enable_backfill = 0
+    resources_default.enable_fifo = 0
+    resources_default.enable_wfp = 0
+    resources_default.fifo_factor = 1800
+    resources_default.ncpus = 1
+    resources_default.ni_resource = polaris
+    resources_default.preempt_targets = NONE
+    resources_default.score_boost = 0
+    resources_default.total_cpus = 560
+    resources_default.wfp_factor = 100000
+    default_chunk.ncpus = 64
+    resources_assigned.mpiprocs = 0
+    resources_assigned.ncpus = 34304
+    resources_assigned.nodect = 536
+    scheduler_iteration = 600
+    flatuid = True
+    resv_enable = True
+    node_fail_requeue = 310
+    max_array_size = 10000
+    node_group_enable = True
+    node_group_key = tier0,tier1,system
+    default_qsub_arguments = -k doe -r n -W umask=0022
+    pbs_license_info = 6200@license-polaris-01.lab.alcf.anl.gov:6200@license-po
+	laris-02.lab.alcf.anl.gov:6200@license-polaris-03.lab.alcf.anl.gov
+    pbs_license_min = 1120
+    pbs_license_max = 1200
+    pbs_license_linger_time = 31536000
+    license_count = Avail_Global:28 Avail_Local:4 Used:1116 High_Use:1116
+    pbs_version = 2022.1.1.20220926110806
+    job_sort_formula = base_score + score_boost + (enable_wfp * wfp_factor * (e
+	ligible_time ** 2 / min(max(walltime,21600.0),
+	43200.0) ** 3  * project_priority * nodect / total_cpus)) + (enable_ba
+	ckfill * min(backfill_max,
+	 eligible_time / backfill_factor)) + (enable_fifo * eligible_time / fi
+	fo_factor)
+    eligible_time_enable = True
+    job_history_enable = True
+    max_concurrent_provision = 5
+    backfill_depth = 10
+    python_restart_max_hooks = 1000000000
+    python_restart_max_objects = 1000000000
+    python_restart_min_interval = 123127:46:40
+    power_provisioning = False
+    max_job_sequence_id = 9999999
+

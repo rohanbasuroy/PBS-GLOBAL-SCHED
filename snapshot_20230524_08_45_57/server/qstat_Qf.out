@@ -1,0 +1,343 @@
+Queue: run_next
+    queue_type = Execution
+    Priority = 100
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    acl_user_enable = True
+    acl_users = +jenkinsat@*
+    enabled = False
+    started = False
+
+Queue: debug
+    queue_type = Execution
+    Priority = 100
+    total_jobs = 5
+    state_count = Transit:0 Queued:1 Held:1 Waiting:0 Running:3 Exiting:0 Begun
+	:0 
+    resources_max.nodect = 2
+    resources_max.walltime = 01:00:00
+    resources_min.nodect = 1
+    resources_min.walltime = 00:05:00
+    resources_default.base_score = 51
+    resources_default.enable_fifo = 1
+    default_chunk.build = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    resources_assigned.mpiprocs = 0
+    resources_assigned.ncpus = 192
+    resources_assigned.nodect = 3
+    max_run = [u:PBS_GENERIC=1]
+    max_run_res.nodect = [o:PBS_ALL=8]
+    enabled = True
+    started = True
+    queued_jobs_threshold = [u:PBS_GENERIC=1]
+
+Queue: debug-scaling
+    queue_type = Execution
+    Priority = 100
+    total_jobs = 1
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:1 Exiting:0 Begun
+	:0 
+    max_queued = [u:PBS_GENERIC=1]
+    resources_max.nodect = 10
+    resources_max.walltime = 01:00:00
+    resources_min.nodect = 1
+    resources_min.walltime = 00:05:00
+    resources_default.base_score = 51
+    resources_default.enable_fifo = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    resources_assigned.mpiprocs = 0
+    resources_assigned.ncpus = 128
+    resources_assigned.nodect = 2
+    enabled = True
+    started = True
+
+Queue: prod
+    queue_type = Route
+    total_jobs = 30
+    state_count = Transit:0 Queued:30 Held:0 Waiting:0 Running:0 Exiting:0 Begu
+	n:0 
+    max_queued = [p:PBS_GENERIC=100]
+    resources_max.nodect = 496
+    resources_max.walltime = 24:00:00
+    resources_min.nodect = 10
+    resources_min.walltime = 00:05:00
+    route_destinations = small,medium,large,backfill-small,backfill-medium,
+	backfill-large
+    enabled = True
+    started = True
+
+Queue: small
+    queue_type = Execution
+    Priority = 150
+    total_jobs = 22
+    state_count = Transit:0 Queued:1 Held:9 Waiting:0 Running:12 Exiting:0 Begu
+	n:0 
+    max_queued = [p:PBS_GENERIC=10]
+    from_route_only = True
+    resources_max.nodect = 24
+    resources_max.overburn = False
+    resources_max.route_backfill = False
+    resources_max.walltime = 03:00:00
+    resources_min.nodect = 10
+    resources_min.overburn = False
+    resources_min.route_backfill = False
+    resources_min.walltime = 00:05:00
+    resources_default.base_score = 51
+    resources_default.enable_wfp = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    resources_assigned.ncpus = 13056
+    resources_assigned.nodect = 204
+    enabled = True
+    started = True
+
+Queue: medium
+    queue_type = Execution
+    Priority = 150
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    max_queued = [p:PBS_GENERIC=10]
+    from_route_only = True
+    resources_max.nodect = 99
+    resources_max.overburn = False
+    resources_max.route_backfill = False
+    resources_max.walltime = 06:00:00
+    resources_min.nodect = 25
+    resources_min.overburn = False
+    resources_min.route_backfill = False
+    resources_min.walltime = 00:05:00
+    resources_default.base_score = 51
+    resources_default.enable_wfp = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    resources_assigned.ncpus = 0
+    resources_assigned.nodect = 0
+    enabled = True
+    started = True
+
+Queue: large
+    queue_type = Execution
+    Priority = 150
+    total_jobs = 4
+    state_count = Transit:0 Queued:1 Held:2 Waiting:0 Running:1 Exiting:0 Begun
+	:0 
+    max_queued = [p:PBS_GENERIC=10]
+    from_route_only = True
+    resources_max.nodect = 496
+    resources_max.route_backfill = False
+    resources_max.walltime = 24:00:00
+    resources_min.nodect = 100
+    resources_min.route_backfill = False
+    resources_min.walltime = 00:05:00
+    resources_default.base_score = 51
+    resources_default.enable_wfp = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    resources_assigned.ncpus = 6400
+    resources_assigned.nodect = 100
+    enabled = True
+    started = True
+
+Queue: backfill-small
+    queue_type = Execution
+    Priority = 1
+    total_jobs = 21
+    state_count = Transit:0 Queued:0 Held:10 Waiting:0 Running:11 Exiting:0 Beg
+	un:0 
+    max_queued = [p:PBS_GENERIC=10]
+    from_route_only = True
+    resources_max.nodect = 24
+    resources_max.walltime = 03:00:00
+    resources_min.nodect = 10
+    resources_min.walltime = 00:05:00
+    resources_default.enable_backfill = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    resources_assigned.ncpus = 11008
+    resources_assigned.nodect = 172
+    enabled = True
+    started = True
+
+Queue: backfill-medium
+    queue_type = Execution
+    Priority = 1
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    max_queued = [p:PBS_GENERIC=10]
+    from_route_only = True
+    resources_max.nodect = 99
+    resources_max.walltime = 06:00:00
+    resources_min.nodect = 25
+    resources_min.walltime = 00:05:00
+    resources_default.enable_backfill = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    enabled = True
+    started = True
+
+Queue: backfill-large
+    queue_type = Execution
+    Priority = 1
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    max_queued = [p:PBS_GENERIC=10]
+    from_route_only = True
+    resources_max.nodect = 496
+    resources_max.route_backfill = True
+    resources_max.walltime = 24:00:00
+    resources_min.nodect = 100
+    resources_min.route_backfill = True
+    resources_min.walltime = 00:05:00
+    resources_default.enable_backfill = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = False
+    default_chunk.system = polaris
+    enabled = True
+    started = True
+
+Queue: preemptable
+    queue_type = Execution
+    Priority = 0
+    total_jobs = 39
+    state_count = Transit:0 Queued:10 Held:11 Waiting:0 Running:18 Exiting:0 Be
+	gun:0 
+    max_queued = [p:PBS_GENERIC=20]
+    resources_max.nodect = 10
+    resources_max.walltime = 72:00:00
+    resources_min.nodect = 1
+    resources_default.enable_fifo = 1
+    default_chunk.build = False
+    default_chunk.debug = False
+    default_chunk.demand = True
+    default_chunk.system = polaris
+    resources_assigned.ncpus = 3456
+    resources_assigned.nodect = 54
+    enabled = True
+    started = True
+
+Queue: demand
+    queue_type = Execution
+    Priority = 150
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    max_queued = [p:PBS_GENERIC=100]
+    resources_max.nodect = 56
+    resources_max.walltime = 01:00:00
+    resources_min.nodect = 1
+    resources_default.allow_negative_allocation = True
+    resources_default.enable_fifo = 1
+    resources_default.preempt_targets = Queue=preemptable
+    acl_group_enable = True
+    acl_groups = APSDataProcessing,aps26id,aps2id,aps34ide,aps8idi
+    default_chunk.build = False
+    default_chunk.demand = True
+    default_chunk.system = polaris
+    resources_assigned.ncpus = 0
+    resources_assigned.nodect = 0
+    enabled = True
+    started = True
+
+Queue: tagger
+    queue_type = Execution
+    total_jobs = 80
+    state_count = Transit:0 Queued:80 Held:0 Waiting:0 Running:0 Exiting:0 Begu
+	n:0 
+    acl_user_enable = True
+    acl_users = +cadams@*,+leggett@*
+    resources_default.base_score = 5000
+    resources_default.enable_fifo = 3
+    enabled = True
+    started = False
+
+Queue: noise
+    queue_type = Execution
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    acl_user_enable = True
+    acl_users = +leggett@*
+    resources_default.base_score = 51
+    resources_default.enable_fifo = 1
+    enabled = True
+    started = False
+
+Queue: build
+    queue_type = Execution
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    acl_users = allcock@*,ascovel@*,cblackworth@*,mluczkow@*,richp@*
+    resources_max.ncpus = 36
+    resources_max.ngpus = 1
+    resources_min.ncpus = 36
+    resources_min.ngpus = 1
+    default_chunk.build = True
+    default_chunk.debug = False
+    default_chunk.demand = True
+    default_chunk.ncpus = 36
+    default_chunk.ngpus = 1
+    default_chunk.system = polaris
+    enabled = True
+    started = True
+
+Queue: M485344
+    queue_type = Execution
+    total_jobs = 0
+    state_count = Transit:0 Queued:0 Held:0 Waiting:0 Running:0 Exiting:0 Begun
+	:0 
+    acl_user_enable = True
+    acl_users = allcock@polaris-login-01.hsn.cm.polaris.alcf.anl.gov,mprince@*
+    resources_max.allow_account_check_failure = True
+    resources_max.allow_negative_allocation = True
+    resources_max.backfill_factor = 84600
+    resources_max.backfill_max = 50
+    resources_max.base_score = 0
+    resources_max.enable_backfill = 0
+    resources_max.enable_fifo = 0
+    resources_max.enable_wfp = 0
+    resources_max.fifo_factor = 1800
+    resources_max.ncpus = 64
+    resources_max.ni_resource = polaris
+    resources_max.preempt_targets = NONE
+    resources_max.score_boost = 0
+    resources_max.total_cpus = 560
+    resources_max.wfp_factor = 100000
+    resources_available.allow_account_check_failure = True
+    resources_available.allow_negative_allocation = True
+    resources_available.backfill_factor = 84600
+    resources_available.backfill_max = 50
+    resources_available.base_score = 0
+    resources_available.enable_backfill = 0
+    resources_available.enable_fifo = 0
+    resources_available.enable_wfp = 0
+    resources_available.fifo_factor = 1800
+    resources_available.ncpus = 64
+    resources_available.ni_resource = polaris
+    resources_available.preempt_targets = NONE
+    resources_available.score_boost = 0
+    resources_available.total_cpus = 560
+    resources_available.wfp_factor = 100000
+    enabled = True
+    started = True
+    partition = pbs-default
+

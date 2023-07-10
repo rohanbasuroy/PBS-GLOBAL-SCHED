@@ -1,0 +1,2 @@
+hook_name=validate_qsub
+event=queuejob,modifyjob

@@ -1,0 +1,2 @@
+hook_name=fs_control
+event=queuejob,modifyjob
