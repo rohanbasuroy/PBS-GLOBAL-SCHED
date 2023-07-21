@@ -4,7 +4,7 @@ Here, the DIM_JOB_COMPOSITE logs of all ALCF systems (with PBS or non-PBS schedu
 
 ### Installation and Setup Steps
 1. Go to /soft/applications/
-2. Download the PBSPro Simulation package: PBSPro\-sim\_2022.1.0\-<OS><OS version>\_x86_64.tar.gz
+2. Download the PBSPro Simulation package: PBSPro\-sim\_2022.1.3\-/<OS/>/<OS version/>\_x86_64.tar.gz
 3. tar xvfz PBSPro\-sim\_2022.1.3\-<OS><OS version>\_x86_64.tar.gz
 4. cd PBSPro-sim_2022.1.0
 5. In the sim.conf file, make sure to set the following: SIM_LICENSE_LOCATION=6200@<license server>
