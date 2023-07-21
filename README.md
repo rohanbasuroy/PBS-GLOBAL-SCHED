@@ -1,9 +1,20 @@
 # PBS Global Scheduler
 ### Description of the tool
-PBS Global Scheduler uses DIM_JOB_COMPOSITE data of ALCF systems to implement different scheduling techniques. It converts any ALCF log (PBS or non-PBS) into PBS format, and uses PBS simulator in the backend to develop scheduling strategies. Also, in a given timeframe, it can determine the most optimal scheduling startegy/ sorting formula to aid system admins. Users can use to simulate scheduling of real ALCF job invocation logs with different scheduling sorting formula. Also, system admins can utilize the optimal scheduling formula, as determined by this tool, to configure the systems for real time scheduling. Currently, this repo contains the DIM_JOB_COMPOSITE logs of MIRA, POLARIS, THETA, THETAGPU, COOLEY, and INTREPID. When the DIM_JOB_COMPOSITE data of the later ALCF systems become available, it nees to be extracted in the "./data" folder for simulation.
+Here, the DIM_JOB_COMPOSITE logs of all ALCF systems (with PBS or non-PBS schedulers) are converted into pbs snapshots, which serve as an input to its simulator. These snapshots contain the accounting logs of the ALCF systems which is used by the simulator. This simulator allows users to try out different scheduling sorting formulas, use backfilling, and set different kinds of queue priorities and reservations. This will aid users to study scheduling strategies via ALCF job logs. 
 
-### Installation
-This tool uses PBS simulator (already present in this repo), in the backend, to perform the simulations. For this to work, the following PBS executables needs to be in path: *pbs_est, pbs_rstat, pbs_rsub, pbs_sim, pbs_nodes, qdel, qmgr, qselect, qstat, qsub, tracejob*. Also, the following environment variable needs to be set: **SIM_LICENSE_LOCATION=6200@license-polaris-01.lab.alcf.anl.gov**. This is required to point PBS simulator to the license server. 
+### Installation and Setup Steps
+1. Go to /soft/applications/
+2. Download the PBSPro Simulation package: PBSPro\-sim\_2022.1.0\-<OS><OS version>\_x86_64.tar.gz
+3. tar xvfz PBSPro\-sim\_2022.1.3\-<OS><OS version>\_x86_64.tar.gz
+4. cd PBSPro-sim_2022.1.0
+5. In the sim.conf file, make sure to set the following: SIM_LICENSE_LOCATION=6200@<license server>
+   In an ALCF system, you can use the followinf: SIM_LICENSE_LOCATION=6200@license-polaris-01.lab.alcf.anl.gov
+6. Place the "simsh" directory inside /soft/applications/PBSPro-sim_2022.1.3/ 
+7. cd /soft/applications/PBSPro-sim_2022.1.3/simsh
+8. Run the simulation via: python3 simsh.py \<flag values\>
+
+The "simsh" directory contains the converted snapshots with the accounting logs of all the ALCF systems, in the following path: /soft/applications/PBSPro-sim_2022.1.3/simsh/snap_\<ALCF system name\>. 
+Inside each snapshot, the "data" folder contains the entire DIM_JOB_COMPOSITE data of the system. These are converted to accounting logs and placed at /soft/applications/PBSPro-sim_2022.1.3/simsh/snap_/<ALCF system name\>/server_priv/accounting
 
 ### Basic Usage 
 For its operation, the simulator needs atleast the following three flags to be set: (1) "--machine_name" (name of the ALCF system to be simulated), "--start_time" (start timestamp of simulation in YYYY-MM-DD HH:MM:SS), and "--end_time" (end timestamp of simulation in YYYY-MM-DD HH:MM:SS).
@@ -41,18 +52,12 @@ An example usage is:
 ```
 python3 simsh.py --machine_name="polaris" --start_time="2023-02-10 19:00:00" --end_time="2023-02-14 19:00:00" --select_sort_formula="QUEUED_TIMESTAMP:2, WALLTIME_SECONDS:1"
 ```
-In this case the job sort formula is *2\*QUEUED_TIMESTAMP + 1\*WALLTIME_SECONDS*. If the flag is not set, by default, the job sort scheduling formula is *1\*QUEUED_TIMESTAMP + 1\*WALLTIME_SECONDS*.
+In this case the job sort formula is *2\*QUEUED_TIMESTAMP + 1\*WALLTIME_SECONDS*. Here, 2 and 1 are the weights given to QUEUED_TIMESTAMP and WALLTIME_SECONDS to create the job sorting formula. If a weight is positive, then a smaller value of the attribute is given priority, if it is negative then a larger value of the attribute is given priority in the sorting. If the flag is not set, by default, the job sort scheduling formula is *1\*QUEUED_TIMESTAMP + 1\*WALLTIME_SECONDS*.
 
 ### Using all flags together
 The following example shows the siumlation using all the aforementioned flags together:
 ```
 python3 simsh.py --machine_name="polaris" --start_time="2023-02-10 19:00:00" --end_time="2023-02-14 19:00:00" --backfill --set_priority="analysis:2, demand:4" --set_reservation="preemptable:56, analysis:10" --select_sort_formula="QUEUED_TIMESTAMP:2, WALLTIME_SECONDS:1"
-```
-
-### Optimizing the job sort scheduling formula
-The "--optimize" flag outputs the job sort formula which optimizes thorughput. It brute-forces through all options to find the most optimal one. This tool will be soon updated to add optimizations for other metrics like utilization, fairness, etc. will be added. 
-```
-python3 simsh.py --machine_name="polaris" --start_time="2023-02-10 19:00:00" --end_time="2023-02-14 19:00:00" --optimize
 ```
 
 ### Output
